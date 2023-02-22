@@ -149,6 +149,31 @@ LIBRARIES       = $(SDKPATH)/usr/lib
 CFLAGS          += -Wno-error=format-overflow -Wno-error=implicit-function-declaration -Wno-error=unused-variable -Wno-error=unused-label -Wno-error=stringop-overflow
 endif
 
+ifdef BUILD_RG35XX
+TARGET 	        = $(VERSION_NAME).elf
+TARGET_FINAL    = $(VERSION_NAME)
+TARGET_PLATFORM = LINUX
+BUILD_LINUX     = 1
+BUILD_SDL       = 1
+BUILD_GFX       = 1
+BUILD_PTHREAD   = 1
+BUILD_SDL_IO    = 1
+BUILD_OPENGL    = 1
+BUILD_LOADGL    = 1
+BUILD_VORBIS    = 1
+BUILD_WEBM      = 1
+BUILDING        = 1
+INCLUDES        = $(SDKPATH)/usr/include \
+                  $(SDKPATH)/usr/include/SDL2
+OBJTYPE         = elf
+LIBRARIES       = #$(SDKPATH)/arm-buildroot-linux-gnueabihf/sysroot/usr/lib \
+                  #$(SDKPATH)/usr/lib
+# Workaround for GCC 9
+CFLAGS          += -Os -Wno-error=overflow -Wno-error=format-overflow -Wno-error=implicit-function-declaration -Wno-error=unused-variable -Wno-error=unused-label \
+                   -Wno-error=deprecated-declarations -Wno-error=stringop-overflow -fomit-frame-pointer -ffunction-sections -ffast-math -fsingle-precision-constant \
+                   -marm -mtune=cortex-a9 -mfpu=neon-fp16 -mfloat-abi=hard -march=armv7-a
+endif
+
 ifdef BUILD_DARWIN
 TARGET          = $(VERSION_NAME).elf
 TARGET_FINAL    = $(VERSION_NAME)
@@ -242,6 +267,9 @@ STRIP 	        = $(WINDEV)/$(PREFIX)strip$(EXTENSION) $(TARGET) -o $(TARGET_FINA
 endif
 ifdef BUILD_LINUX
 STRIP 	        = $(LNXDEV)/$(PREFIX)strip $(TARGET) -o $(TARGET_FINAL)
+endif
+ifdef BUILD_RG35XX
+STRIP 	        = $(RG35XXDEV)/$(PREFIX)strip $(TARGET) -o $(TARGET_FINAL)
 endif
 ifdef BUILD_DARWIN
 STRIP           = $(PREFIX)strip $(TARGET) -o $(TARGET_FINAL)
@@ -492,7 +520,6 @@ OBJS            = $(MAIN)                                                       
 
 CFLAGS 	       += $(addprefix -I", $(addsuffix ", $(INCS))) $(ARCHFLAGS) -D$(TARGET_PLATFORM)
 CFLAGS 	       += -g -Wall -Werror -Wno-format-truncation -Wno-stringop-truncation -fsigned-char -std=gnu99
-
 
 ifndef BUILD_DARWIN
 ifdef BUILD_LINUX

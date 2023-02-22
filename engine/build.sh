@@ -76,6 +76,20 @@ if test -e "releases/WINDOWS/OpenBOR/OpenBOR.exe"; then
       exit 1
     fi
   fi
+  if test -e "releases/RG35XX/OpenBOR/OpenBOR"; then
+   # cd ../tools/borpak/source/
+   # . build.sh lin
+   # cp borpak ../../../engine/releases/LINUX/OpenBOR/
+   # cp ../scripts/packer ../../../engine/releases/LINUX/OpenBOR/
+   # cp ../scripts/paxplode ../../../engine/releases/LINUX/OpenBOR/
+   # cd ../../../engine
+   echo "ok"
+  else
+    if [ `echo $HOST_PLATFORM | grep -o "RG35XX"` ]; then
+      echo "RG35XX Platform Failed To Build!"
+      exit 1
+    fi
+  fi
   if test -e "releases/DARWIN/OpenBOR.app/Contents/MacOS/OpenBOR"; then
     cd ../tools/borpak/source/
     . build.sh mac
@@ -177,6 +191,35 @@ function linux {
     fi
   fi
   [ $LNXDEV ]
+}
+
+# RG35XX Environment && Compile 
+function rg35xx {
+  export PATH=$OLD_PATH
+  export GCC_TARGET=$1
+  . ./environ.sh 11
+  if test $RG35XXDEV; then
+    if [[ ! $BUILD_DEBUG ]] ; then
+      make clean BUILD_RG35XX=1
+    fi
+    make BUILD_RG35XX=1
+    if test -f "./OpenBOR"; then
+      if test ! -e "./releases/RG35XX"; then
+        mkdir ./releases/RG35XX
+        mkdir ./releases/RG35XX/OpenBOR
+        mkdir ./releases/RG35XX/OpenBOR/Logs
+        mkdir ./releases/RG35XX/OpenBOR/Paks
+        mkdir ./releases/RG35XX/OpenBOR/Saves
+        mkdir ./releases/RG35XX/OpenBOR/ScreenShots
+      fi
+      mv OpenBOR ./releases/RG35XX/OpenBOR
+      echo "moved binary to ./releases/RG35XX/ !"
+    fi
+    if [[ ! $BUILD_DEBUG ]] ; then
+      make clean BUILD_RG35XX=1
+    fi
+  fi
+  [ $RG35XXDEV ]
 }
 
 # Compile for Linux under various architectures
@@ -375,6 +418,11 @@ case $1 in
   10)
     version
     darwin
+    ;;
+
+  11)
+    version
+    rg35xx
     ;;
 
   ?)

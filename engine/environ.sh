@@ -455,6 +455,31 @@ case $1 in
 
 ############################################################################
 #                                                                          #
+#                           RG35XX Environment                             #
+#                                                                          #
+############################################################################
+11)
+   if test -e "/opt/rg35xx/"; then
+     export RG35XXDEV=/opt/rg35xx/bin
+     export SDKPATH=/opt/rg35xx
+     export PREFIX=arm-linux-
+     export PATH=$RG35XXDEV:$PATH
+     export GCC_TARGET=`arm-linux-gcc -dumpmachine`
+   fi
+   if test $RG35XXDEV; then
+     echo "-------------------------------------------------------"
+     echo "   RG35XX SDK ($GCC_TARGET) Environment Loaded!"
+     echo "-------------------------------------------------------"
+   else
+     echo "-------------------------------------------------------"
+     echo "     ERROR - RG35XX Environment Failed"
+     echo "                 SDK Installed?"
+     echo "-------------------------------------------------------"
+   fi
+   ;;
+
+############################################################################
+#                                                                          #
 #                             Wrong value?                                 #
 #                                                                          #
 ############################################################################
@@ -471,6 +496,7 @@ case $1 in
    echo "   8 = OpenDingux"
    echo "   9 = Wiz"
    echo "  10 = Darwin"
+   echo "  11 = RG35XX"
    echo "-------------------------------------------------------"
    echo
    ;;

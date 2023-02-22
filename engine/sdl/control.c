@@ -295,6 +295,7 @@ void control_exit()
 
 static void set_default_keyboard_mappings(InputDevice *device)
 {
+/*
     device->mappings[SDID_MOVEUP]     = SDL_SCANCODE_UP;
     device->mappings[SDID_MOVEDOWN]   = SDL_SCANCODE_DOWN;
     device->mappings[SDID_MOVELEFT]   = SDL_SCANCODE_LEFT;
@@ -308,6 +309,21 @@ static void set_default_keyboard_mappings(InputDevice *device)
     device->mappings[SDID_START]      = SDL_SCANCODE_RETURN;
     device->mappings[SDID_SCREENSHOT] = SDL_SCANCODE_F12;
     device->mappings[SDID_ESC]        = SDL_SCANCODE_ESCAPE;
+*/
+    device->mappings[SDID_MOVEUP]     = SDL_SCANCODE_W; // RG35XX DPAD_UP
+    device->mappings[SDID_MOVEDOWN]   = SDL_SCANCODE_S; // RG35XX DPAD_DOWN
+    device->mappings[SDID_MOVELEFT]   = SDL_SCANCODE_Q; // RG35XX DPAD_LEFT
+    device->mappings[SDID_MOVERIGHT]  = SDL_SCANCODE_D; // RG35XX DPAD_RIGHT
+    device->mappings[SDID_ATTACK]     = SDL_SCANCODE_B; // RG35XX B
+    device->mappings[SDID_ATTACK2]    = SDL_SCANCODE_Y; // RG35XX Y
+    device->mappings[SDID_ATTACK3]    = SDL_SCANCODE_X; // RG35XX X
+    device->mappings[SDID_ATTACK4]    = SDL_SCANCODE_J; // RG35XX R2
+    device->mappings[SDID_JUMP]       = SDL_SCANCODE_A; // RG35XX A
+    device->mappings[SDID_SPECIAL]    = SDL_SCANCODE_H; // RG35XX L1
+    device->mappings[SDID_START]      = SDL_SCANCODE_M; // RG35XX START
+    device->mappings[SDID_SCREENSHOT] = SDL_SCANCODE_J; // RG35XX R2
+    device->mappings[SDID_ESC]        = SDL_SCANCODE_N; // RG35XX SELECT
+
 }
 
 static void set_default_controller_mappings(InputDevice *device)
