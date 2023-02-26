@@ -202,7 +202,7 @@ void video_fullscreen_flip()
 void blit()
 {
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-	SDL_RenderClear(renderer);
+	//SDL_RenderClear(renderer); //ED (2023-02-25) fix screen tearing at the main menu.
 	SDL_RenderCopy(renderer, texture, NULL, NULL);
 
 	if (brightness > 0)

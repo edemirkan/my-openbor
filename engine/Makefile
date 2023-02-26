@@ -169,8 +169,9 @@ OBJTYPE         = elf
 LIBRARIES       = #$(SDKPATH)/arm-buildroot-linux-gnueabihf/sysroot/usr/lib \
                   #$(SDKPATH)/usr/lib
 # Workaround for GCC 9
-CFLAGS          += -Os -Wno-error=overflow -Wno-error=format-overflow -Wno-error=implicit-function-declaration -Wno-error=unused-variable -Wno-error=unused-label \
-                   -Wno-error=deprecated-declarations -Wno-error=stringop-overflow -fomit-frame-pointer -ffunction-sections -ffast-math -fsingle-precision-constant \
+CFLAGS          += -DRG35XX -Os -Wno-error=overflow -Wno-error=format-overflow -Wno-error=implicit-function-declaration -Wno-error=unused-variable -Wno-error=unused-label \
+                   -Wno-error=deprecated-declarations -Wno-error=stringop-overflow -ffunction-sections -fdata-sections -flto \
+                   -Wno-incompatible-pointer-types \
                    -marm -mtune=cortex-a9 -mfpu=neon-fp16 -mfloat-abi=hard -march=armv7-a
 endif
 
@@ -348,6 +349,8 @@ GFX 	        = source/gfxlib/2xSaI.o                                            
                   source/gfxlib/gfx.o                                                               \
                   source/gfxlib/hq2x.o                                                              \
                   source/gfxlib/scale2x.o                                                           \
+                  source/gfxlib/neon2x.o                                                            \
+                  source/gfxlib/scaler_neon.o                                                       \
                   source/gfxlib/scanline.o                                                          \
                   source/gfxlib/simple2x.o                                                          \
                   source/gfxlib/tv2x.o
@@ -519,7 +522,7 @@ OBJS            = $(MAIN)                                                       
 #----------------------------------------------------------------------------------------------------
 
 CFLAGS 	       += $(addprefix -I", $(addsuffix ", $(INCS))) $(ARCHFLAGS) -D$(TARGET_PLATFORM)
-CFLAGS 	       += -g -Wall -Werror -Wno-format-truncation -Wno-stringop-truncation -fsigned-char -std=gnu99
+CFLAGS 	       += -g -Wall -Wno-format-truncation -Wno-stringop-truncation -fsigned-char -std=gnu99
 
 ifndef BUILD_DARWIN
 ifdef BUILD_LINUX

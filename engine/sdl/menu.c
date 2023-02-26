@@ -460,7 +460,7 @@ static void initMenu(int type)
 	pixelformat = PIXEL_x8;
 
 	savedata.fullscreen = isFull;
-	video_stretch(savedata.stretch);
+	//video_stretch(savedata.stretch);
 	videomodes.hRes = isWide ? 480 :320;
 	videomodes.vRes = isWide ? 272 :240;
 	videomodes.pixel = pixelbytes[PIXEL_32];
@@ -547,6 +547,11 @@ static void drawMenu()
 	printText((isWide ? 150 : 84),(isWide ? 251 : 226), WHITE, 0, 0, "A2: BGM Player");
 	printText((isWide ? 270 : 164),(isWide ? 251 : 226), WHITE, 0, 0, "J: View Logs");
 	printText((isWide ? 390 : 244),(isWide ? 251 : 226), WHITE, 0, 0, "S: Quit Game");
+#elif RG35XX
+	printText((isWide ? 23 : 4),(isWide ? 251 : 226), WHITE, 0, 0, "%s: Start Game", control_getmappedkeyname(0, SDID_ATTACK));
+	printText((isWide ? 150 : 84),(isWide ? 251 : 226), WHITE, 0, 0, "%s: BGM Player", control_getmappedkeyname(0, SDID_ATTACK2));
+	printText((isWide ? 270 : 164),(isWide ? 251 : 226), WHITE, 0, 0, "%s: View Logs", control_getmappedkeyname(0, SDID_JUMP));
+	printText((isWide ? 390 : 244),(isWide ? 251 : 226), WHITE, 0, 0, "%s: Quit", control_getmappedkeyname(0, SDID_ESC));
 #else
 	printText((isWide ? 23 : 4),(isWide ? 251 : 226), WHITE, 0, 0, "%s: Start Game", control_getmappedkeyname(0, SDID_ATTACK));
 	printText((isWide ? 150 : 84),(isWide ? 251 : 226), WHITE, 0, 0, "%s: BGM Player", control_getmappedkeyname(0, SDID_ATTACK2));
@@ -609,6 +614,11 @@ static void drawBGMPlayer()
 	printText((isWide ? 150 : 84),(isWide ? 251 : 226), WHITE, 0, 0, "A2: %s", bgmLoop ? "Repeat On" : "Repeat Off");
 	printText((isWide ? 270 : 164),(isWide ? 251 : 226), WHITE, 0, 0, "J: %s", bgmCycle ? "Cycle On" : "Cycle Off");
 	printText((isWide ? 390 : 244),(isWide ? 251 : 226), WHITE, 0, 0, "S: Exit Player");
+#elif RG35XX
+	printText((isWide ? 23 : 4),(isWide ? 251 : 226), WHITE, 0, 0, "%s: %s", control_getmappedkeyname(0, SDID_ATTACK), bgmPlay ? "Stop" : "Play");
+	printText((isWide ? 150 : 84),(isWide ? 251 : 226), WHITE, 0, 0, "%s: %s", control_getmappedkeyname(0, SDID_ATTACK2), bgmLoop ? "Repeat On" : "Repeat Off");
+	printText((isWide ? 270 : 164),(isWide ? 251 : 226), WHITE, 0, 0, "%s: %s", control_getmappedkeyname(0, SDID_JUMP), bgmCycle ? "Cycle On" : "Cycle Off");
+	printText((isWide ? 390 : 244),(isWide ? 251 : 226), WHITE, 0, 0, "%s: Exit", control_getmappedkeyname(0, SDID_ESC));
 #else
 	printText((isWide ? 23 : 4),(isWide ? 251 : 226), WHITE, 0, 0, "%s: %s", control_getmappedkeyname(0, SDID_ATTACK), bgmPlay ? "Stop" : "Play");
 	printText((isWide ? 150 : 84),(isWide ? 251 : 226), WHITE, 0, 0, "%s: %s", control_getmappedkeyname(0, SDID_ATTACK2), bgmLoop ? "Repeat On" : "Repeat Off");
@@ -657,8 +667,8 @@ static void drawLogs()
 		putscreen(vscreen,logscreen,0,0,NULL);
 	    inputrefresh(0);
 	    sound_update_music();
-#if OPENDINGUX
-	    printText(250, 3, RED, 0, 0, "Quit : Select");
+#if OPENDINGUX || RG35XX
+	    printText(250, 3, RED, 0, 0, "Menu : Quit");
 #else
 	    printText((isWide ? 410 : 250), 3, RED, 0, 0, "Quit : Escape");
 #endif
