@@ -30,7 +30,9 @@ SDL_Window *window = NULL;
 static SDL_Renderer *renderer = NULL;
 static SDL_Texture *texture = NULL;
 s_videomodes stored_videomodes;
+#ifdef WEBM
 yuv_video_mode stored_yuv_mode;
+#endif
 int yuv_mode = 0;
 char windowTitle[MAX_LABEL_LEN] = {"OpenBOR"};
 int stretch = 0;
@@ -196,7 +198,9 @@ void video_fullscreen_flip()
 	int restore_yuv = yuv_mode;
 	savedata.fullscreen ^= 1;
 	if(window) video_set_mode(stored_videomodes);
+#ifdef WEBM
 	if(restore_yuv) video_setup_yuv_overlay(&stored_yuv_mode);
+#endif
 }
 
 void blit()
@@ -254,6 +258,7 @@ void video_set_color_correction(int gm, int br)
 	if(opengl) video_gl_set_color_correction(gm, br);
 }
 
+#ifdef WEBM
 int video_setup_yuv_overlay(const yuv_video_mode *mode)
 {
 	stored_yuv_mode = *mode;
@@ -287,7 +292,7 @@ int video_display_yuv_frame(void)
 	blit();
 	return 1;
 }
-
+#endif
 void vga_vwait(void)
 {
 	static int prevtick = 0;

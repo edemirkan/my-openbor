@@ -10,7 +10,9 @@
 #define BOR_OPENGL_H
 
 #include "types.h"
+#ifdef WEBM
 #include "yuv.h"
+#endif
 #include "videocommon.h"
 
 #ifdef OPENGL
@@ -21,11 +23,12 @@ int video_gl_copy_screen(s_videosurface*);
 void video_gl_clearscreen();
 void video_gl_set_color_correction(int, int);
 
+#ifdef WEBM
 // for WebM video playback
 int video_gl_setup_yuv_overlay(const yuv_video_mode*);
 int video_gl_prepare_yuv_frame(yuv_frame*);
 int video_gl_display_yuv_frame(void);
-
+#endif
 #else
 
 // define dummy macros for OpenGL video functions if OpenGL is not supported

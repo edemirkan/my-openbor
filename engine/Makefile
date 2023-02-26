@@ -158,10 +158,10 @@ BUILD_SDL       = 1
 BUILD_GFX       = 1
 BUILD_PTHREAD   = 1
 BUILD_SDL_IO    = 1
-BUILD_OPENGL    = 1
-BUILD_LOADGL    = 1
+#BUILD_OPENGL    = 1
+#BUILD_LOADGL    = 1
 BUILD_VORBIS    = 1
-BUILD_WEBM      = 1
+#BUILD_WEBM      = 1
 BUILDING        = 1
 INCLUDES        = $(SDKPATH)/usr/include \
                   $(SDKPATH)/usr/include/SDL2

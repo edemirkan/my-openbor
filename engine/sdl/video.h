@@ -11,7 +11,9 @@
 
 #include "gfxtypes.h"
 #include "types.h"
+#ifdef WEBM
 #include "yuv.h"
+#endif
 #include "SDL.h"
 
 extern u8 pDeltaBuffer[480 * 2592];
@@ -28,10 +30,11 @@ void video_stretch(int);
 void video_set_window_title(const char*);
 void video_set_color_correction(int, int);
 
+#ifdef WEBM
 // for WebM video playback
 int video_setup_yuv_overlay(const yuv_video_mode*);
 int video_prepare_yuv_frame(yuv_frame*);
 int video_display_yuv_frame(void);
-
+#endif
 #endif
 
