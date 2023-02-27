@@ -38055,7 +38055,7 @@ VIDEOMODES:
     }
     videomodes.pixel = pixelbytes[(int)vscreen->pixelformat];
     //video_set_mode(videomodes);
-    video_clearscreen(); //ED (2023-02-25) fix dirty letterbox.
+    video_clearscreen(); //edemirkan (2023-02-25) fix dirty letterbox.
     clearscreen(vscreen);
 
     if(log)
